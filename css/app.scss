@@ -1,0 +1,43 @@
+@import "reset";
+@import "typography";
+$primary-color: #ca774a;
+$body-fonts: "jost";
+$body-size: 24px;
+$mq-larg: 800px;
+$mq-mediam: 600px;
+
+// mixing
+
+@mixin mq($width) {
+  @media (max-width: $width) {
+    @content;
+  }
+}
+@mixin verticaly-midle() {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+// styling
+body {
+  background-color: $primary-color;
+  color: white;
+  font-family: $body-fonts;
+  font-size: $body-size;
+  line-height: 1.5;
+  height: 100vh;
+  @include verticaly-midle();
+}
+
+section {
+  width: 500px;
+  @include mq($mq-mediam) {
+    width: 350px;
+    font-size: 16px;
+  }
+  p {
+    margin: 24px 0 0 0;
+  }
+}
