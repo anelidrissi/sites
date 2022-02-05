@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/anelidrissi/sites#readme",
   "devDependencies": {
-    "gulp": "^4.0.2"
+    "gulp": "^4.0.2",
+    "gulp-sass": "^5.1.0",
+    "node-sass": "^7.0.1"
   }
 }
