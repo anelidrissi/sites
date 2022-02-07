@@ -6,8 +6,14 @@ const { parallel } = require("gulp")
 const htmlmin = require("gulp-htmlmin")
 /// css
 var cleanCSS = require("gulp-clean-css")
-const { src } = require("gulp")
+const { src, dest, watch, series } = require("gulp")
+const terser = require("gulp-terser")
+const bbrowserSync = require("browser-sync").create()
 
+//sass
+const sass = require("node-sass")
+const postcss = require("gulp-postcss")
+const cssnano = require("cssnano")
 function minifyHtml() {
   return gulp
     .src("src/index.html")
@@ -40,11 +46,19 @@ function toBuildimg() {
     .pipe(livereload())
 }
 
+function sasss() {
+  return gulp
+    .src("src/css/app.scss", { sourcemaps: true })
+    .pipe(sass())
+    .pipe(postcss([cssnano()]))
+    .pipe(dest("src/app.css", { sourcemaps: "." }))
+}
+
 exports.default = function () {
   require("./server.js")
   livereload.listen()
   gulp.watch(
-    ["src/index.html", "src/app.css"],
-    parallel(minifyHtml, movecss, toBuild, toBuildimg)
+    ["src/index.html", "src/app.css", "src/css/app.scss"],
+    parallel(minifyHtml, movecss, toBuild, toBuildimg, sasss)
   )
 }
